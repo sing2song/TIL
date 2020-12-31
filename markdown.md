@@ -83,7 +83,7 @@ print('hi')
 
 ## 그림
 
-![img](md-images/Epb87rnUYAAgMZ4)
+![jjangu](md-images/jjangu.jpg)
 
 - typroa 설정을 통해 상대 경로로 깨지지 않고 활용가능하다\
 

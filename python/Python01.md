@@ -56,7 +56,7 @@ mobile App을 만들기는 적합X 시스템 프로그래밍도 안됨!
 #5. Set
 - set집합데이터 타입
 #6. bool
-
+- bool
 ```
 
 
@@ -108,7 +108,7 @@ print(a) #33
 
 
 
-**리스트(list)**
+##### **리스트(list)**
 
 - 대괄호[]를 사용해서 리스트 표현
 - 파이썬의 기본 표현이기도함
@@ -196,7 +196,7 @@ print(a)		#[8, 7, 3, 2, 1]
 
 
 
-**튜플(tuple)**
+##### **튜플(tuple)**
 
 - () 소괄호를 이용해서 표현
 - 값 수정이 불가능하다(고정된값, **READ ONLY**)
@@ -288,15 +288,15 @@ print('python'*3)	#pythonpythonpython
 
 
 
-- 형변환
+> 형변환
 
-  ```python
-  a=100	#Numeric(int)
-  b='count : '	#Text sequence(str)
-  
-  print(b+a)	#Error!!!
-  print(b+str(a))
-  ```
+```python
+a=100	#Numeric(int)
+b='count : '	#Text sequence(str)
+
+print(b+a)	#Error!!!
+print(b+str(a))
+```
 
 
 
@@ -385,7 +385,7 @@ dict_keys는 리스트는 아니지만 리스트처럼 사용가능하다.
 
 
 
-> Python에서의 for문 사용법
+##### Python에서의 for문 사용법
 
 block을 표현할 때 {}를 사용하지 않습니다!
 
@@ -404,8 +404,75 @@ print('name' in a)	#True
 
 
 
-#### 5.Set type
+#### 5. Set type
 
-- 중복을 배제
+- 중복을 배제.
+- 순서가 없는 자료구조.(append를 쓰지 않는다. 대신 add사용)
 
 - 중괄호 {}를 사용한다. 대신 key가 존재하지 않는다.
+
+```python
+a={1,2,3}	#=>set
+print(a)	#{1,2,3}
+a={1,2,3,2,3,1,2,3}
+print(a)	#{1,2,3}
+
+a=set([1,2,3,4,5])	#list로 구성되어있으나 set함수로 바꿈
+print(a)	#{1,2,3,4,5}
+b=set([4,5,6,7,8])
+
+##############################################
+#교집합, intersection
+result = a&b	
+print(result)	#{4,5}
+
+#합집합, union
+result = a|b	
+print(result)	#{1,2,3,4,5,6,7,8}
+
+#차집합,difference
+result = a-b	
+print(result)	#{1,2,3}
+###############################################
+
+#추가
+a=set()
+a.add(7)	#요소 1개 추가
+print(a)	#7
+a.update([1,2,3,4])	#여러개를 추가 할 때는 update
+print(a)	#{1,2,3,4,7}
+
+#삭제
+a.remove(4)	#1개를 지울때
+print(a)	#{1,2,3,7}
+
+#del (a[1]) set은 수정불가! del로는 a자체만 없앨 수 있다.
+a.difference_update({2,3})
+print(a)	#{1,7}
+
+a.clear()	#내용물 다 지우기
+print(a)	#set()
+```
+
+
+
+#### 6. Bool type
+
+- 논리형(True, False)
+- 사용할 수 있는 연산자 and, or, not
+
+```python
+print(True or False)	#True
+print(True and False)	#False
+```
+
+
+
+> False인 상황
+
+1. 빈 문자열(' ') 논리 type으로 표현하면 False
+2. 빈 리스트( [] ) False로 간주
+3. 빈 Tuple( () ) False로 간주
+4. 빈 dict( {} ) False로 간주
+5. 숫자 0은 False, 나머지 숫자는 True.
+6. None 값이 없다. False.

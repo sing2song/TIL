@@ -21,7 +21,7 @@ mobile App을 만들기는 적합X 시스템 프로그래밍도 안됨!
 
 
 
-### 파이썬을 코딩하는 IDE
+### 파이썬 IDE
 
 1. pycham(파이참)
 
@@ -45,14 +45,18 @@ mobile App을 만들기는 적합X 시스템 프로그래밍도 안됨!
 
 ```python
 #목차
-#1. numeric
+#1. Numeric
 - int , float, complex
 #2. sequence
-- list, tuple
-#3. text sequence(문자열)
-#4. mapping
-#5. set
+- list, tuple, range
+#3. Text sequence(문자열)
+- str
+#4. Mapping
+- dict 딕셔너리
+#5. Set
+- set집합데이터 타입
 #6. bool
+
 ```
 
 
@@ -107,6 +111,7 @@ print(a) #33
 **리스트(list)**
 
 - 대괄호[]를 사용해서 리스트 표현
+- 파이썬의 기본 표현이기도함
 
 ```python
 a=list() #빈 리스트 생성
@@ -194,7 +199,7 @@ print(a)		#[8, 7, 3, 2, 1]
 **튜플(tuple)**
 
 - () 소괄호를 이용해서 표현
-- 값 수정이 불가능하다
+- 값 수정이 불가능하다(고정된값, **READ ONLY**)
 - 소괄호가 생략가능하다
 
 ```python
@@ -235,3 +240,172 @@ result=tuple(last)
 print("last=",result)# last= (1, 2, 3)
 ```
 
+
+
+__range__
+
+- 반복문에서 자주 사용됨.
+
+```python
+#range(시작,끝,증가치)
+a=range(10)	# 0부터 9까지 1씩 증가하는 sequence
+b=[0,1,2,3,4,5,6,7,8,9]
+print(a)	# range(0,10)
+```
+
+> a와 b의 차이
+
+b는 실제 10개의 값이 저장되기때문에 메모리 소모가 크다.
+a는 의미가 적용되어있는 것(범위) 적은 양의 데이터를 가지고 진행. 메모리 소모가 작음.
+
+```python
+range1=range(1,11,2)	#1,3,5,7,9
+
+print(7 in range1)	#True
+print(10 in range1)	#False
+
+print(range1[2])	#5
+print(range1[2:])	#range(5,11,2)
+print(range1[-2])	#7 / slicing
+```
+
+
+
+#### 3. Text Sequence Type(문자열 - string)
+
+다른 언어는 ' ' 와 " " 를 구분해서 사용한다.
+
+여러가지 함수들을 갖고있다.
+
+```python
+a='this is a'	#sequence(list)
+b=' same'
+c=' text'
+
+print(a+b+c)	#this is a sample text
+print('python'*3)	#pythonpythonpython
+```
+
+
+
+- 형변환
+
+  ```python
+  a=100	#Numeric(int)
+  b='count : '	#Text sequence(str)
+  
+  print(b+a)	#Error!!!
+  print(b+str(a))
+  ```
+
+
+
+> 인덱싱(indexing)
+
+ ```python
+a='This is a sample text'
+print(type(a))	#<class 'str'>
+print(a[3])	# 's'
+
+print('Sam' in a)	#False
+print('Sam' not in a)	#True
+ ```
+
+
+
+> 함수
+
+```python
+#len(): 길이를 알고싶을때
+a='cocacola'
+print(len(a))	#8
+
+#count(): 내가 원하는 문자가 몇번 나오는지
+print(a.count('c'))	#3
+print(a.count(''))	#9 왜 9가 나올까요?
+
+#upper(): 대문자 변형
+print(a.upper())
+
+#format(): 문자열 출력관련
+apple_count=5
+orange_count=10
+a='나는 사과를 {}개, 귤은 {}개 가지고 있어요!!'.format(apple_count,orange_count)
+
+#{}안에 순번을 적어도 된다
+#ex.나는 사과를 {0}개, 귤은 {1}개 가지고 있어요!!
+print(a)
+```
+
+
+
+#### 4. Mapping Type
+
+- dict(딕셔너리)
+
+- 중괄호{}를 사용
+
+- key와 value의 쌍으로 데이터를 표현
+
+- { key : value } => JSON 형식과 같다.
+
+```python
+a={'name':'홍길동', 'age':30}
+print(type(a))	#<class 'dict'>
+print(a)	#{'name': '홍길동', 'age': 30}
+
+#추가
+a['address'] = '서울'		#key값이 존재하지 않으면 데이터를 추가한다
+print(a)	#{'name': '홍길동', 'age': 30, 'address': '서울'}
+
+#삭제
+del(a['age'])
+print(a)	#{'name': '홍길동', 'address': '서울'}
+
+##################################################
+a={'name':'홍길동','age':20,300:500,(1,2,3):1000}
+
+#keys():key값을 dict_keys라는 데이터 리스트로 가져오는 함수
+print(a.keys())	#dict_keys(['name', 'age', 300, (1, 2, 3)])
+
+#values():모든 키들에 대한 value값을 출력
+print(a.values())	#dict_values(['홍길동', 20, 500, 1000])
+
+```
+
+key값이 존재하지 않으면 데이터를 추가한다.
+
+프로그래밍의 유연성측면에서는 좋지만 논리오류에 취약하다.
+
+오타가 나도 그대로 적용되기 때문.
+
+key값은 변하지 않는 고유의 값. **(tuple사용가능)**
+
+dict_keys는 리스트는 아니지만 리스트처럼 사용가능하다. 
+
+
+
+> Python에서의 for문 사용법
+
+block을 표현할 때 {}를 사용하지 않습니다!
+
+대신 indent를 사용한다!
+
+```python
+#모든 key에 대한 value값을 출력하기
+for key in a.keys():
+    print('key : {}, value : {}'.format(key,a[key]))
+    
+print('name' in a)	#True
+#dict에서 in은 key값에서만 작용한다
+```
+
+
+
+
+
+#### 5.Set type
+
+- 중복을 배제
+
+- 중괄호 {}를 사용한다. 대신 key가 존재하지 않는다.

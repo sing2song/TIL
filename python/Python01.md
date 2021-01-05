@@ -476,3 +476,22 @@ print(True and False)	#False
 4. 빈 dict( {} ) False로 간주
 5. 숫자 0은 False, 나머지 숫자는 True.
 6. None 값이 없다. False.
+
+
+
+
+
+### For문에 대해서 잠깐 체크!
+
+![image-20210105132309568](md-images/image-20210105132309568.png)
+
+- print()는 default형태로 사용하면 출력 후 줄바꿈을 한다. 
+
+- 만약 내용 출력 후 줄바꿈 대신 다른 처리를 하기 위해선 end속성을 이용하면 된다.
+
+```python
+for tmp in [1,2,3,4,5]:
+    print(tmp,end=" ")	#1 2 3 4 5
+    #"" 또는 '' 사용가능
+```
+

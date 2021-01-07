@@ -329,15 +329,17 @@ stu_grade = [3.5, 4.5, 1.5]
 
 > 객체지향적으로 표현해보자!
 
-학생
+ex. 학생
 - 속성:이름,학과,학번,학점
 - 기능:자신의 정보를 문자열로 만들어서 리턴한다.
 
 
 
-사용자 정의 class를 만들때는 class명을 **반드시 첫글자를 대문자로 작성.**
+- 사용자 정의 class를 만들때는 class명을 **반드시 첫글자를 대문자로 작성.**
 
-python의 모든 class는 object class를 상속하고 있어요!
+
+- python의 모든 class는 `object class`를 상속하고 있어요!(생략가능)
+- _ _init_ _함수는 생성자와 비슷한 개념 안에 self 속성을 넣어준다.
 
 ```python
 class Student(object):
@@ -372,6 +374,8 @@ print(students[1].dept)
 - C++언어에서는 변수를 member variable(멤버변수), 함수를 function(멤버함수)
 - python언어에서는 변수를 property(속성,프로퍼티), 함수를 method(메소드)
 
+- class인스턴스 **`object`와 그 안의 메소드의 인스턴스인 `self` 잊지말기!!!**
+
 
 
 ```python
@@ -390,17 +394,77 @@ class Student(object):
     
 stu1=Student('강감찬','경영학과','20201120',3.4)
 print(stu1.get_stu_info())
+
+stu1.name='홍길동'	#내용바꾸기 가능
+pribt(stu1.name)
+
+stu1.names='이황'	#파이썬에서는 가능! 새로운 속성이 추가가 된다!
+				 #javascript와 비슷.
+pribt(stu1.names)
 ```
 
-- class인스턴스 **`object`와 그 안의 메소드의 인스턴스인 `self` 잊지말기!!!**
 
 
+### class변수
+
+`class variable` : class안에 있는 것들이 공유하는 것.
+
+`instance variable` : 각각의 인스턴스가 갖는 속성
+
+`instance method` : 각각의 인스턴스가 갖는 메소드
+
+전부 밖에서도 변경이 가능하다. (python에서만 가능!)
+
+인스턴스가 가지고 있는 속성은 외부에서 직접적인 **변경이 불가능하도록** 코드를 작성하는 것이 좋다.
+
+**차라리 바꾸는 메소드를 만들어서 사용하는 것이 좋음!**
+
+```python
+class Student(object):
+    scholarship_rate = 3.0  #class variable
+    def __init__(self,name,dept):
+        self.name=name     #각각의 객체(인스턴스)가 따로 들고있는 것.
+        self.dept=dept     #instance variable
+    
+    def get_student_info(self):  #instance method
+        return '이름은 : {}, 학과는 : {}'.format(self.name,self.dept)
+        
+	def change_info(self,name,dept):
+        self.name=name
+        self.dept=dept
+        
+    def is_scholarship(self):
+        if self.grade>=Student.scholarship_rate:
+            return True
+        else:
+            return False
+        
+        
+stu1 = Student('미미','요리학과')
+stu2 = Student('한솔','컴퓨터과')
+
+print(stu1.get_student_info())
+print(stu2.get_student_info())
+
+#본래 객체지향에서는 객체가 가지고 있는 속성과 메소드만 사용할 수 있다.
+#현재 stu1객체는 2개의 property와 1개의 method를 가지고 있다.
 
 
+stu1.names='이황'	#파이썬에서는 가능! 새로운 속성이 추가가 된다!
+				 #javascript와 비슷.
+print(stu1.names)	#이황
+print(stu1.scholarship_rate)	#3.0
+stu1.scholarship_rate=3.5
+print(stu1.scholarship_rate)	#3.5
+print(stu2.scholarship_rate)	#3.0
+#위와 같은 상황은 `namespace` 를 알면 간단히 이해할 수 있다!
 
+Student.scholarship_rate=2.0  #class variable을 변경할때에는 클래스 이름사용.
+print(stu1.scholarship_rate)
 
-
-
-
-
+stu1.change_info('나리','유아교육')
+#인스턴스가 가지고 있는 속성은 외부에서 직접적인 변경이 불가능하도록 코드를 작성하는 것이 좋다.
+#차라리 바꾸는 메소드를 만들어서 사용하는 것이 좋음!
+print(stu1.get_student_info())
+```
 

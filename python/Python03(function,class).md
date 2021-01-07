@@ -226,5 +226,49 @@ print(f(10,20,30))	#60 print(10+20+30)과 같은 형태
 
 
 
+## magic function
+
+magic function의 특징은 일반적으로 우리가 직접 호출하지않는다!
+
+특정 순간이 되면 자동적으로 호출
+
+```python
+ex. __init__(), __str__(), __del__(), __lt__(), ...
+
+class Student(object):
+    def __init__(self,name,dept,grade):
+        print('객체가 생성됩니다.')
+        self.name=name
+        self.dept=dept
+        self.grade=grade
+        
+    def __del__(self):   #instance가 메모리에서 삭제 될 때 호출
+        print('객체가 삭제되요!!')
+        #객체가 삭제될 때 이 객체가 사용한 resource를 해제
+    
+    def __str__(self):
+        #이 클래스로부터 파생된 인스턴스 객체를 문자열로 바꿀 때 호출
+        return '이름은 : {}, 학과는 : {}'.format(self.name,self.dept)
+    
+    def __gt__(self,other):
+            if self.grade>other.grade:
+                return True
+            else:
+                return False   
+            
+stu1=Student('나나','한문학과',3.0)
+stu2=Student('미미','철학',2.0)
+#객체가 생성되면 특정 메모리 주소에 메모리 공간이 할당(0x100)
+#두번째 실행에서 객체가 생성되면 특정 메모리 주소에 공간이 할당(0x200)
+#이때 0x100는 삭제 되므로 __del__함수가 호출되는 것!
+
+print(stu1)   #메모리 주소값이 나온다. - __gt__()생성전
+			  #특성한 문자열을 출력하고 싶은 경우 __str__()를 지정해준다!
+#del stu1	
 
 
+print(stu1<stu2)   #False
+
+```
+
+![image-20210107142207851](md-images/image-20210107142207851.png)

@@ -550,3 +550,50 @@ https://dev.mysql.com/downloads/
 7. 방어벽 허용.
 8. 종료하는 법 : 새로운 cmd창을 하나 더 띄우고 cd로 bin폴더로 움직인다음에 `mysqladmin - u root shutdown` 명령어로 종료할 수 있다
 
+
+
+> 새로운 사용자 ID/PW 만들기
+
+1. mysql console에 들어가기. (관리자 권한)
+2. `mysql -u root` 입력!(**그 전에 다른 cmd에서 mysqld를 명령을 실행해둬야한다! 총 cmd창을 2개 띄우는 것!!!!!!!!!!!!**)
+3. console에 들어가면 mysql> 로 시작하는 프롬프트가 보인다.
+4. 정상적으로 접속했으면 새로운 사용자를 다음의 명령어로 만든다.
+
+```mysql
+create user data identified by "data"; 
+#"data"부분은 ID(스스로지정) password부분도 지정해서 넣어주기?
+```
+
+5. 외부 접속을 위해 다음의 명령을 한 번 더 실행!
+
+```mysql
+create user data@localhost identified by "data";
+#@localhost가 없으면 외부접속이 불가능!
+```
+
+6. 데이터가 저장될 데이터베이스를 생성해야한다! 우리가 사용하는 mysql은 DBMS(DataBase Management System=데이터베이스 관리도구)
+
+7. 실제 데이터를 저장할 공간. 데이터베이스라는 공간을 만든다. 
+
+``` mysql
+   create database library; #database생성
+```
+
+   현재 사용자(data)가 따로 있고 database(library)가 따로 있는 상황!
+
+8. 사용자가 데이터베이스를 사용할 수 있도록 권한을 부여할 것.
+```mysql
+grant all privileges on library.* to data; #data는 사용자 이름
+grant all privileges on library.* to data@localhost; #data는 사용자 이름
+```
+
+![image-20210113163624746](md-images/image-20210113163624746.png)
+
+
+
+9. 권한 설정에 대한 refresh를 시킨다.
+
+```mysql
+flush privileges;	#권한 적용
+```
+

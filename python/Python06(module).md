@@ -72,3 +72,43 @@ print(m1.variable1)					#화이티이잉
 print(my_network_module.variable1)	#화이티이잉
 ```
 
+
+
+
+
+# 예외처리
+
+`try - except` : 프로그램이 강제종료되지 않게 보완해주는 예외처리! 기본적인 구문
+
+`else` : except가 발생하지 않았을 때에 이 뒤의 코드 사용.
+
+`finally` : 예외가 있건 없건 무조건 실행!!
+
+```python
+#python의 예외처리
+###정상적인 코드 - list를 이용한
+def my_func(list_data):
+    
+    my_sum=0
+    try:#문제가 발생하면 예외처리!
+        my_sum=list_data[0]+list_data[1]+list_data[2]
+    
+    except Exception as err:#문제가 발생하면 아래 코드가 실행
+        print('실행시 문제가 발생했어요!')
+        my_sum=0
+    
+    else:
+        print('실행시 문제가 없어요!!')
+    
+    finally:
+        print('만약 finally가 존재하면 무조건 실행!!')
+        
+  
+    return my_sum
+
+my_list=[1,2]
+print(my_func(my_list))
+
+
+```
+

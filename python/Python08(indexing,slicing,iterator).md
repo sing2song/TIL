@@ -462,3 +462,73 @@ print(arr)	#[0 1 2 3 4 5 6 7 8 9] 원본에 sort가 저장!
 
 
 
+# 연결
+
+
+
+`concatenate((a,b),axis=?)` : a와 b에는 연결할 array값을 넣는다. 차원이 다르면 reshape를 활용해서 넣자! axis뒤로는 행과 열 중에서 어느 방향으로 붙일지를 지정해준다.
+
+axis=0 : 행
+
+axis=1 : 열
+
+array를 연결하기 위해선 차원이 같아야한다.
+
+```python
+
+import numpy as np
+
+arr = np.array([[1,2,3],
+               [4,5,6]])   #(2,3) 2행3열
+
+#연결하기 위해선 차원이 같아야한다!!
+#np.concatenate((연결해야할것들),axis=0) 0:행방향으로 붙임, 1:열방향으로 붙임
+new_row = np.array([7,8,9])#(3,) 1차원,요소 3개
+
+result = np.concatenate((arr,new_row.reshape(1,3)),axis=0) 
+print(result)
+'''
+[[1 2 3]
+ [4 5 6]
+ [7 8 9]]
+'''
+
+new_col=np.array([7,8,9,10])
+result = np.concatenate((arr,new_col.reshape(2,2)),axis=1) 
+print(result)
+'''
+[[ 1  2  3  7  8]
+ [ 4  5  6  9 10]]
+'''
+```
+
+
+
+# 삭제
+
+`delete(a,b,axis=?)`: a 에는 삭제할 array값, b에는 index값, axis는 생략가능(default 1차배열)
+
+axis를 기준으로 삭제가 진행된다. 
+
+axis를 명시하지 않으면 자동으로 1차배열로 변환 된 후 삭제된다.
+
+```python
+arr = np.array([[1,2,3],
+                [4,5,6]])
+
+result = np.delete(arr,1)  #1차배열로 변환한 후 삭제 (1번인덱스 2삭제)
+print(result)	#[1 3 4 5 6]
+
+result = np.delete(arr,1,axis=0)#행기준 1번인덱스(1행삭제)
+print(result)     #[[1 2 3]]
+
+result=np.delete(arr,1,axis=1) #열방향으로 1번째 인덱스 삭제
+print(result)
+'''
+[[1 3]
+ [4 6]]
+ '''
+```
+
+
+

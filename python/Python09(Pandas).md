@@ -427,7 +427,7 @@ XML보다 용량이 작다!!
 
 ### 생성법
 
-#### dict로 생성
+#### 1. dict로 생성
 
 ```python
 import numpy as np
@@ -483,7 +483,7 @@ display(df)
 
 
 
-#### CSV로 생성
+#### 2. CSV로 생성
 
 `head()` : 상위 5개 행 가르킴
 
@@ -510,7 +510,7 @@ print(df.shape) #(9742,3) 2차원이고 9742행 3열
 
 
 
-#### Database로부터 데이터를 읽어서 생성
+#### 3. Database로부터 데이터를 읽어서 생성
 ##### MySQL 설치
 
 MariaDB와 MySQL의 포트번호가 같으므로 하나를 사용하는 것을 추천!
@@ -539,16 +539,21 @@ https://dev.mysql.com/downloads/
 
 3. 다운 받은 폴더 압축풀기 ( setup같은 것이 있는 것이 아님!)
 
-4. 윈도우 cmd창 띄우기!(win+R키 : cmd입력)
+
+
+##### MySQL 실행
+
+1. 윈도우 cmd창 띄우기!(win+R키 : cmd입력)
 
 ![image-20210113153754077](md-images/image-20210113153754077.png)
 
-5. cd명령어로 다운받은 폴더 내의 bin폴더 위치로 옮기기
+2. cd명령어로 다운받은 폴더 내의 bin폴더 위치로 옮기기
 
-6. 실행하는 법 : cmd창에서 `mysqld` 명령어 실행.
+3. 실행하는 법 : cmd창에서 `mysqld` 명령어 실행.
 
-7. 방어벽 허용.
-8. 종료하는 법 : 새로운 cmd창을 하나 더 띄우고 cd로 bin폴더로 움직인다음에 `mysqladmin - u root shutdown` 명령어로 종료할 수 있다
+4. 방어벽 허용.
+
+5. 종료하는 법 : 새로운 cmd창을 하나 더 띄우고 cd로 bin폴더로 움직인다음에 `mysqladmin - u root shutdown` 명령어로 종료할 수 있다
 
 
 
@@ -605,6 +610,7 @@ flush privileges;	#권한 적용
 exit;
 ```
 
+
 11. exit해서 나온 도스창(cmd)에서 강사님이 제공한 script file을 이용해서 데이터를 적재하기.
 
     C:\Users\32153256\Desktop\mysql-5.6.50-winx64\mysql-5.6.50-winx64\bin에 저장했음. (_BookTableDump.sql)
@@ -622,3 +628,31 @@ exit;
     <: library 데이터베스 안에 넣겠다는 의미
 
 ![image-20210113164945824](md-images/image-20210113164945824.png)
+
+
+
+##### Toad 설치
+
+12. `toad for mysql` 다운받기. mysql을 다루는 툴인 toad!!!
+
+https://www.toadworld.com/downloads
+
+![image-20210114093037664](md-images/image-20210114093037664.png)
+
+MySQL페이지에서 Toad Edge 선택!
+
+![image-20210114093129310](md-images/image-20210114093129310.png)
+
+Limited freeware선택해서 이메일 적고 window 다운!
+
+![image-20210114093328225](md-images/image-20210114093328225.png)
+
+default값으로 따로 선택할 거 없이 install한다!
+
+
+
+##### Toad 실행
+
+![image-20210114100435582](md-images/image-20210114100435582.png)
+
+1. connection 눌러서 어제 만든 database로 접속!

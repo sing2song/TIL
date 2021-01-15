@@ -281,3 +281,67 @@ _하지만 보기 어렵다!!_
 ex) []로 표현된것은 json array, {}는 json
 
 ![image-20210114152649677](md-images/image-20210114152649677.png)
+
+
+
+
+
+### 생성
+
+Open API를 이용해서 DataFrame을 만들어보아요~
+
+```python
+import numpy as np
+import pandas as pd
+import json
+import urllib
+
+open_api='http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json'
+query_string = '?key=e44bc4e4ab8b74158359604fc98cc83b&targetDt=20210114'
+open_api_url=open_api+query_string
+
+page_obj = urllib.request.urlopen(open_api_url)#결과물을 주게된다!
+print(type(page_obj))
+#<class 'http.client.HTTPResponse'> 웹은 request구조. response를 돌려준다.
+```
+
+웹은 request구조. response를 돌려준다.
+
+`request` : URL을 이용해서 호출하는 행위
+`response` :  request의 결과로 웹서버에서 우리에게 전달하는 행위
+
+response 객체 안에는 우리가 원하는 json이 포함되어있다.
+
+해당 객체에서 json 결과를 가져와야함!
+
+
+
+```python
+json_page = json.loads(page_obj.read())#json을 얻을 수 있음 dict형태로 가져옴.
+
+#결과 json을 python의 dict로 변환
+#원하는 내용을 뽑아서 DataFrame으로 생성!
+my_dict = dict()    #{}
+rank_list=list()
+title_list=list()
+sales_list=list()
+
+for tmp_dict in json_page['boxOfficeResult']['dailyBoxOfficeList']:#dict안에 dict를 뽑는 형식
+    rank_list.append(tmp_dict['rank'])
+    title_list.append(tmp_dict['movieNm'])
+    sales_list.append(tmp_dict['salesAmt'])
+
+my_dict['순위']=rank_list
+my_dict['제목']=title_list
+my_dict['매출액']=sales_list
+
+df=pd.DataFrame(my_dict)
+display(df)
+```
+
+![image-20210115103058350](md-images/image-20210115103058350.png)
+
+
+
+## 복습
+

@@ -611,23 +611,30 @@ exit;
 ```
 
 
+
 11. exit해서 나온 도스창(cmd)에서 강사님이 제공한 script file을 이용해서 데이터를 적재하기.
 
     C:\Users\32153256\Desktop\mysql-5.6.50-winx64\mysql-5.6.50-winx64\bin에 저장했음. (_BookTableDump.sql)
 
-    `mysql -u data -p library < _BookTableDump.sql`
+    ```bash
+mysql -u data -p library < _BookTableDump.sql
+    ```
+
+    
 
     #data계정의 권한으로 library 데이터 베이스 안에 데이터를 넣겠다는 뜻.
 
     pw를 "data"로 넣을 것
 
     
-
+    
     -p: 나중에 password넣겠다
-
+    
     <: library 데이터베스 안에 넣겠다는 의미
 
 ![image-20210113164945824](md-images/image-20210113164945824.png)
+
+
 
 
 
@@ -656,3 +663,4 @@ default값으로 따로 선택할 거 없이 install한다!
 ![image-20210114100435582](md-images/image-20210114100435582.png)
 
 1. connection 눌러서 어제 만든 database로 접속!
+2. cmd창에서 명령어`mysqld`로 mysql 켜두기!!

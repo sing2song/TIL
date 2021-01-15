@@ -345,3 +345,375 @@ display(df)
 
 ## 복습
 
+### DataFrame 다루기
+
+`NaN` : 값이 없다. 결치. 실수 값으로 해석됨.
+
+```python
+data = {'이름':['보라돌이','뚜비','나나','뽀','햇님'],
+      '학과':['컴퓨터','철학','수학','경제','영문'],
+      '학년':[1, 2, 2, 4, 3],
+      '학점':[1.3, 3.5, 2.7, 4.3, 4.5]}
+
+df = pd.DataFrame(data,
+                  columns=['학과','이름','학년','학점','주소'],
+                  index=['one','two','three','four','five'])
+
+#주소 안에 값이 없으므로 NaN으로 생성된다.
+```
+
+![image-20210115172153358](md-images/image-20210115172153358.png)
+
+
+
+- column값만 뽑으면 Series가 출력된다.
+
+```python
+print(df['이름'])
+print(type(df['이름']))
+
+'''
+one      보라돌이
+two        뚜비
+three      나나
+four        뽀
+five       햇님
+Name: 이름, dtype: object
+<class 'pandas.core.series.Series'>
+'''
+```
+
+
+
+- 특정 컬럼을 뽑으면 View로 나온다. 
+
+> warning 메세지를 끄는 법
+
+warnings.filterwarnings(action='ignore') #warning off
+#warnings.filterwarnings(action='default') #warning on
+
+```python
+import warnings #내장모듈
+warnings.filterwarnings(action='ignore') #warning off
+#warnings.filterwarnings(action='default') #warning on
+
+
+stu_name=df['이름']
+#특정컬럼을 뽑으면 View가 나온다
+stu_name['three']='을지문덕'#warning 메세지가 나온다!
+print(stu_name)
+display(df)
+```
+
+![image-20210115172534074](md-images/image-20210115172534074.png)
+
+
+
+
+
+- 별도의 Series를 만들때는 별도의 객체를 만들도록 copy()함수를 사용한다.
+
+- 이와 같이 사용하면 원본은 변하지 않는다!
+
+```python
+stu_name=df['이름'].copy() #별도의 객체를 만들도록 copy()함수 사용
+stu_name['three']='을지문덕'#warning 메세지가 나온다!
+print(stu_name)
+display(df)
+```
+
+![image-20210115172708241](md-images/image-20210115172708241.png)
+
+- df[['이름']] 은 DataFrame. fancy indexing을 해서 원본이 나옴.
+- df['이름']은 일반 인덱싱을 했기때문에 Series(컬럼을 들고 온것, slicing)
+
+
+
+
+
+### Column 다루기 
+#### fancy indexing
+
+두 개 이상의 column을 가져올때 어떻게 해야하나?
+
+Q. 이름과 학점 column가져오기! 
+
+A. fancy indexing을 사용한다!, slicing은 불가능!!
+
+```python
+df는 위에서 사용한것으로 진행!!
+
+result =df[['이름','학점']] #결과는 DataFrame
+display(result)
+
+```
+
+```python
+print(df['이름'])  #OK. Series로 결과 리턴
+#print(df['이름':'학년']) #Error. column은 slicing이 안된다!
+display(df[['이름','학년']]) #Ok. Fancy indexing은 허용
+
+```
+
+![image-20210115215122185](md-images/image-20210115215122185.png)
+
+
+
+#### boolean indexing
+
+```python
+data = {'이름':['보라돌이','뚜비','나나','뽀','햇님'],
+      '학과':['컴퓨터','철학','수학','경제','영문'],
+      '학년':[1, 2, 2, 4, 3],
+      '학점':[1.3, 3.5, 2.7, 4.3, 4.5]}
+
+df = pd.DataFrame(data,
+                  columns=['학과','이름','학년','학점'],
+                  index=['one','two','three','four','five'])
+display(df)
+
+#단순하게 새로운 column을 추가!
+#연산을 통해서 새로운 column추가할 수 있다!
+df['장학생여부'] = df['학점']>4.0 #boolean mask
+display(df)
+```
+
+![image-20210115181205788](md-images/image-20210115181205788.png)
+
+
+
+
+
+
+
+#### 추가
+
+**broadcasting**
+
+`to_numpy()` : 2차원 array로 만들어준다.
+
+```python
+data = {'이름':['보라돌이','뚜비','나나','뽀','햇님'],
+      '학과':['컴퓨터','철학','수학','경제','영문'],
+      '학년':[1, 2, 2, 4, 3],
+      '학점':[1.3, 3.5, 2.7, 4.3, 4.5]}
+
+df = pd.DataFrame(data,
+                  columns=['학과','이름','학년','학점'],
+                  index=['one','two','three','four','five'])
+
+df['등급'] = 'A' #열 생성과 동시에 브로드캐스팅을한다.
+
+df['등급'] =[1,2,3,4,5]
+
+df['등급'] = np.array(['A','C','B','A','C'])
+
+df['등급'] = np.array(['A','C','B','A'])#부족할땐 Error
+
+df['등급'] = ['A','C','B','A',np.nan] #NaN의미 = 값이 없다! 공백과 다름!
+
+display(df)
+display(df.to_numpy())
+```
+
+![image-20210115173734815](md-images/image-20210115173734815.png)
+
+
+
+- Series로는 추가가 불가능하다!
+- why=>series인덱스는 숫자 밖에 없다! df는 지금 one,two, three,..로 인덱스가 따로 생성되어있다. 인덱스가 맞지 않아서 값을 받지 못함!이럴 때에는 Series에서 index값을 준다.
+
+```python
+df['평점'] = np.arange(1,10,2)  #5개의 값을 이용. 행의 갯수 맞추기
+
+
+ex).df['나이'] = pd.Series([15,20,25,30,35])=>NaN으로 출력된다.
+
+df['나이'] = pd.Series([15,20,25,30,35],
+                    index=['one','two','three','four','five'])#성공! index기반 처리
+
+#index를 기반으로 처리되기 때문에 아래와 같은 경우도 허용한다.
+
+df['나이'] = pd.Series([15,30,35],
+                  index=['one','three','four'])#해당하는 index에만 값이 들어감!
+display(df)
+```
+
+![image-20210115174443204](md-images/image-20210115174443204.png)
+
+
+
+
+
+#### 삭제
+
+`drop()` : 행(0,row,record) 또는 열(1,column)을 지울 수 있음
+
+`inplace 속성 ` : 원본에서 삭제하는 경우(True)
+
+ 원본은 보존하고 삭제처리된 복사본이 생성(False) - default
+
+> 열을 제거할 때
+
+```python
+data = {'이름':['보라돌이','뚜비','나나','뽀','햇님'],
+      '학과':['컴퓨터','철학','수학','경제','영문'],
+      '학년':[1, 2, 2, 4, 3],
+      '학점':[1.3, 3.5, 2.7, 4.3, 4.5]}
+
+df = pd.DataFrame(data,
+                  columns=['학과','이름','학년','학점'],
+                  index=['one','two','three','four','five'])
+display(df)
+
+new_df = df.drop('학년',axis=1,inplace=False)
+display(new_df)#False일때는 복사해서 사용 - 원본영향X
+
+```
+
+
+
+### Row 다루기
+
+#### indexing(slicing)
+
+- 단일 index불가. 
+- Fancy indexing 불가
+- slicing가능
+
+```python
+data = {'이름':['보라돌이','뚜비','나나','뽀','햇님'],
+      '학과':['컴퓨터','철학','수학','경제','영문'],
+      '학년':[1, 2, 2, 4, 3],
+      '학점':[1.3, 3.5, 2.7, 4.3, 4.5]}
+
+df = pd.DataFrame(data,
+                  columns=['학과','이름','학년','학점'],
+                  index=['one','two','three','four','five'])
+display(df)
+
+#display(df[1])#Error!!! 단일 indexing 안됨
+display(df[1:3])#OK! slicing은 됨!!
+display(df[0:1])#slicing 가능! => View로 나온다!!
+display(df[1:])#slicing 
+#display(df[[1,3]]) #Fancy indexing! Error!!!
+```
+
+![image-20210115220122369](md-images/image-20210115220122369.png)
+
+
+
+- index를 이용한 row slicing가능
+
+- index와 일반 index혼용 불가.
+
+```python
+#print(df['one'])#column 인덱싱 표현
+display(df['two':'four'])#OK! index를 이용한 row slicing가능!
+#display(df['two':-1]) #Error! 숫자 index와 일반 index를 혼용해서 사용불가
+#display(df[['one','three']])	#Error! 컬럼에 대한 fancy indexing표현 
+
+```
+
+![image-20210115220521277](md-images/image-20210115220521277.png)
+
+
+
+#### LOC
+
+- row는 별도의 표기법을 따로 이용한다!
+
+- loc[]를 이용해서 row indexing!! 무조건 row에만 사용!! column은 사용불가!!
+- loc는 숫자 인덱스를 사용불가능. 인덱스 값이 따로 지정되지 않아도 불가능!!
+- loc를 이용하면 fancy indexing도 가능하다!
+
+```python
+data = {'이름':['보라돌이','뚜비','나나','뽀','햇님'],
+      '학과':['컴퓨터','철학','수학','경제','영문'],
+      '학년':[1, 2, 2, 4, 3],
+      '학점':[1.3, 3.5, 2.7, 4.3, 4.5]}
+
+df = pd.DataFrame(data,
+                  columns=['학과','이름','학년','학점'],
+                  index=['one','two','three','four','five'])
+display(df)
+
+display(df.loc['two']) 
+#단일 row, Series로 리턴
+#column이 인덱스로 들어간다. row값은 이름으로 들어간다.
+
+display(df.loc['two':'three']) 
+#OK!! 결과는 DataFrame
+
+#loc를 이용하면 fancy indexing도 가능!
+display(df.loc[['two','four']])
+```
+
+![image-20210115220828134](md-images/image-20210115220828134.png)
+
+
+
+- (,)컴마를 기준으로 행, 열 구분해서 출력이 가능하다.
+
+```python
+display(df.loc['one':'three']) #OK! row indexing
+display(df.loc['one':'three','이름'])#row3개 하나의 컬럼 => Series로 나옴
+display(df.loc['one':'three','이름':'학년'])#앞 뒤 slicing 가능해짐!
+display(df.loc[['one','three'],['이름','학점']])#column-fancy indexing 가능해짐!
+
+```
+
+![image-20210115221237308](md-images/image-20210115221237308.png)
+
+
+
+
+
+#### iloc
+
+- loc는 숫자 index를 사용하지 못한다.
+
+- 숫자 index를 사용하려면 iloc[]를 이용하면 된다!
+- fancy indexing도 가능하다.
+
+```python
+data = {'이름':['보라돌이','뚜비','나나','뽀','햇님'],
+      '학과':['컴퓨터','철학','수학','경제','영문'],
+      '학년':[1, 2, 2, 4, 3],
+      '학점':[1.3, 3.5, 2.7, 4.3, 4.5]}
+
+df = pd.DataFrame(data,
+                  columns=['학과','이름','학년','학점'],
+                  index=['one','two','three','four','five'])
+display(df)
+
+display(df.iloc[1]) 
+#단일 row, Series로 리턴
+#column이 인덱스로 들어간다. row값은 이름으로 들어간다.
+
+display(df.iloc[1:3]) #OK!! 결과는 DataFrame
+display(df.iloc[[1,4]])#OK!! loc를 이용하면 fancy indexing도 가능!
+```
+
+![image-20210115221002758](md-images/image-20210115221002758.png)
+
+
+
+
+
+#### 삭제
+
+>열을 제거할 때
+
+```python
+data = {'이름':['보라돌이','뚜비','나나','뽀','햇님'],
+      '학과':['컴퓨터','철학','수학','경제','영문'],
+      '학년':[1, 2, 2, 4, 3],
+      '학점':[1.3, 3.5, 2.7, 4.3, 4.5]}
+
+df = pd.DataFrame(data,
+                  columns=['학과','이름','학년','학점'],
+                  index=['one','two','three','four','five'])
+display(df)
+```
+

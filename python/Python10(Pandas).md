@@ -699,11 +699,7 @@ display(df.iloc[[1,4]])#OK!! loc를 이용하면 fancy indexing도 가능!
 
 
 
-
-
-#### 삭제
-
->열을 제거할 때
+#### boolean indexing
 
 ```python
 data = {'이름':['보라돌이','뚜비','나나','뽀','햇님'],
@@ -715,5 +711,109 @@ df = pd.DataFrame(data,
                   columns=['학과','이름','학년','학점'],
                   index=['one','two','three','four','five'])
 display(df)
+
+#학점이 4.0을 초과하는 학생의 이름과 학점을 DataFrame으로 출력!
+#df['학점']>4.0  #boolean mask
+display(df.loc[df['학점']>4.0,['이름','학점']])#행은 mask, 뒤는 렬
 ```
 
+
+
+#### 추가
+
+- 없는 컬럼을 이용하면 생성
+
+```python
+df.loc['six',:]=['국어국문','김길동',4,3.7]
+df.loc['seven','이름':'학점']=['홍길',2,2.7]
+display(df)
+```
+
+![image-20210115224550869](md-images/image-20210115224550869.png)
+
+
+
+
+
+#### 삭제
+
+>열을 제거할 때
+
+`drop()` : 행(0,row,record) 또는 열(1,column)을 지울 수 있음
+
+`inplace 속성 ` : 원본에서 삭제하는 경우(True)
+
+ 원본은 보존하고 삭제처리된 복사본이 생성(False) - default
+
+Fancy indexing가능
+
+slicing불가!
+
+```python
+data = {'이름':['보라돌이','뚜비','나나','뽀','햇님'],
+      '학과':['컴퓨터','철학','수학','경제','영문'],
+      '학년':[1, 2, 2, 4, 3],
+      '학점':[1.3, 3.5, 2.7, 4.3, 4.5]}
+
+df = pd.DataFrame(data,
+                  columns=['학과','이름','학년','학점'],
+                  index=['one','two','three','four','five'])
+display(df)
+
+df.drop('two',axis=0,inplace=False) 
+#axis를 명시하지 않으면 디폴트값은 axis=0
+#inplace=Fasle가 기본이기 때문에 원본변화를 일으키지 않는다.
+
+#여러줄 지우기
+df.drop(['one','three'],axis=0,inplace=True)  #OK,Fancy indexing
+#df.drop('one':'three',axis=0,inplace=True)  #Error slicing은 사용불가!
+display(df)
+
+```
+
+
+
+## 퀴즈
+
+```python
+import numpy as np
+import pandas as pd
+
+
+data= {'이름':['이지은','박동훈','홍길동','강감찬','오혜영'],
+      '학과':['컴퓨터','기계','철학','컴퓨터','철학'],
+      '학년':[1, 2, 2, 4, 3],
+      '학점':[1.5, 2.0, 3.1, 1.1, 2.7]}
+
+df = pd.DataFrame(data,
+                  columns=['학과','이름','학점','학년','등급'],
+                  index=['one','two','three','four','five'])
+
+display(df)
+```
+
+1. 이름이 박동훈인 사람을 찾아 이름과 학점을 DataFrame으로 출력하기
+
+```python
+display(df.loc[df['이름']=='박동훈', '이름':'학점'])
+   								 #['이름','학점']
+```
+
+   ![image-20210115222905770](md-images/image-20210115222905770.png)
+
+2. 학점(1.5이상 2.5미만)인 사람을 찾아 학과, 이름, 학점을 DataFrame으로 출력하기
+
+```python
+display(df.loc[(df['학점']>=1.5) & (df['학점']<2.5),'학과':'학점'])
+```
+
+![image-20210115222913570](md-images/image-20210115222913570.png)
+
+3. 학점이 3.0을 초과하는 사람을 찾아 등급을 'A'로 설정하기
+
+```python
+df.loc[df['학점']>3.0,'등급']='A'
+display(df)
+```
+
+![image-20210115222920383](md-images/image-20210115222920383.png)

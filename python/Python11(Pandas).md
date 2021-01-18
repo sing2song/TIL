@@ -1,4 +1,4 @@
-# DataFrame
+# 📌DataFrame
 
 - DataFrame이 갖고있는 함수에 대해서 알아봅시다!
 - sum(), min() 같은 기본적인 함수는 제공한다.
@@ -321,7 +321,7 @@ display(df2)
 
 
 
-## 기타함수
+### 기타함수
 
 ```python
 import numpy as np
@@ -376,3 +376,207 @@ Name: E, dtype: int64
 2020-01-06    False
 Freq: D, Name: E, dtype: bool
 ```
+
+
+
+## merge : 병합
+
+### inner join
+
+`pd.merge(df1,df2,on='인덱스',how='inner')` : 인덱스가 같은 것끼리 결합. 있는 것만 표현. 없는건 버린다!
+
+```python
+#DataFrame merge에 대해서 알아보자!
+#Database의 inner join을 생각하시면 되요!
+
+import numpy as np
+import pandas as pd
+
+data1 = {
+    '학번' : [1,2,3,4],
+    '이름' : ['홍길동','신사임당','아이유','김연아'],
+    '학년' : [2,4,1,3]
+}
+
+data2 = {
+    '학번' : [1,2,4,5],
+    '학과' : ['컴퓨터','철학','심리','영어영문'],
+    '학점' : [3.5,2.7,4.0,4.3]
+}
+df1= pd.DataFrame(data1)
+df2= pd.DataFrame(data2)
+
+display(df1)
+display(df2)
+
+#두 df를 결합!
+display(pd.merge(df1,df2,on='학번',how='inner')) #학번이 같은 것끼리 결합!
+```
+
+> 결과
+
+![image-20210118173241669](md-images/image-20210118173241669.png)
+
+
+
+### outer join
+
+outer : 양쪽 모두 포함! 대신 비어있는 값은 NaN으로 표시!
+
+```python
+display(pd.merge(df1,df2,on='학번',how='outer')) #학번이 같은 것끼리 결합!
+```
+
+![image-20210118173442567](md-images/image-20210118173442567.png)
+
+
+
+### left / right join
+
+left : 왼쪽에 있는 것만 가져온다!
+
+right : 오른쪽에 있는 것만 가져온다!
+
+```python
+display(pd.merge(df1,df2,on='학번',how='left'))
+display(pd.merge(df1,df2,on='학번',how='right'))
+```
+
+> 결과물
+
+![image-20210118173549914](md-images/image-20210118173549914.png)
+
+
+
+### index 값이 다를때
+
+left_on='인덱스', right_on='인덱스'
+
+위 속성을 사용해서 index를 이어준다.
+
+```python
+display(pd.merge(df1,df2,left_on='학번',right_on='학생학번',how='inner'))
+```
+
+![image-20210118174606111](md-images/image-20210118174606111.png)
+
+
+
+left_index=True, right_index=True : 각각의 방향의 인덱스를 따라 merge하게 만드는 속성
+
+ex)
+
+```python
+import numpy as np
+import pandas as pd
+
+data1 = {
+    '학번' : [1,2,3,4],
+    '이름' : ['홍길동','신사임당','아이유','김연아'],
+    '학년' : [2,4,1,3]
+}
+
+data2 = {
+    '학과' : ['컴퓨터','철학','심리','영어영문'],
+    '학점' : [3.5,2.7,4.0,4.3]
+}
+df1= pd.DataFrame(data1)
+df2= pd.DataFrame(data2,
+                 index=[1,2,4,5]) #학번이 index로 사용된 경우
+
+display(df1)
+display(df2)
+```
+
+> 기본값
+
+![image-20210118175027954](md-images/image-20210118175027954.png)
+
+
+
+```python
+#1.
+result=pd.merge(df1,df2,
+               left_on='학번',
+               right_index=True,#오른쪽 인덱스를 사용한다!
+               how='inner') 
+
+#2.
+result = pd.merge(df1,df2,
+               left_index=True,#왼쪽df 인덱스를 사용한다!
+               right_index=True,#오른쪽df 인덱스를 사용한다!
+               how='inner') 
+```
+
+1. 왼쪽 DF는 학번 인덱스를 오른쪽인덱스에 맞춰서 merge한다
+
+![image-20210118175509663](md-images/image-20210118175509663.png)
+
+2. 왼쪽 인덱스, 오른쪽 인덱스 모두 같은 부분을 가져온다.
+
+![image-20210118175707550](md-images/image-20210118175707550.png)
+
+
+
+## Concatenation : DataFrame의 연결
+
+`pd.concat([df1,df2], axis=?,sort=True,ignore_index=True)` 
+
+속성
+
+`sort=True` : index순으로 정렬된다
+
+`ignore_index=True` : index무시하기 
+
+```python
+import numpy as np
+import pandas as pd
+
+df1 = pd.DataFrame(np.arange(6).reshape(3,2),
+                  index=['a','b','d'],
+                  columns=['one','two'])
+
+df2 = pd.DataFrame(np.arange(4).reshape(2,2),
+                  index=['a','c'],
+                  columns=['three','four'])
+
+display(df1)
+display(df2)
+```
+
+> 기본 결과값
+
+![image-20210118175847216](md-images/image-20210118175847216.png)
+
+> 열단위 연결
+
+```python
+result = pd.concat([df1,df2],
+                  	axis=1,
+              		sort=True)
+display(result)
+```
+
+![image-20210118181606774](md-images/image-20210118181606774.png)
+
+
+
+> 행단위 연결
+
+현재 df1의 index가 a,b,d 이고 df2의 index가 a,c인데 내부 숫자 index가 있기때문에 보여지는 index값은 같아도 상관없음
+
+```python
+result = pd.concat([df1,df2],
+                   axis=0)
+display(result)
+
+result = pd.concat([df1,df2],
+                   axis=0,
+                  ignore_index=True)#index 무시하기
+display(result)
+```
+
+![image-20210118181701296](md-images/image-20210118181701296.png)
+
+
+

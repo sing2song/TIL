@@ -230,7 +230,9 @@ display(df)
 - 행방향, 열방향 등 기준을 정해서 정렬이 되어진다.
 - 정렬은 기본적으로 axis를 기준으로 오름차순 정렬.
 
-`pd.date_range('날짜', periods=?)` : 시작날짜와 기간을 입력하면 날짜 범위를 지정해준다. 
+`pd.date_range('날짜', periods=?)` : 시작날짜와 기간을 입력하면 날짜 범위를 지정해준다. periods대신 끝나는 날짜를 기입해도 됨!
+
+ex)df.index=pd.date_range('20200101','20200106')
 
 ```python
 import numpy as np

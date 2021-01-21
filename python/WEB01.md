@@ -130,5 +130,13 @@ why=> 서버는 한정 되어있기 때문에! 클라이언트 수를 조절 할
 
 
 
+### 잠깐 실습
 
+1. jupyter notebook 파일을 보관하고 있는 python_ML에 다가 파일을 만들어봅시다~ webclient_test.py로 파이썬 파일 생성!
+2. 파일 내용을 채우고 Anaconda Prompt를 이용해서 실행시켜본다.
 
+![image-20210121111340241](md-images/image-20210121111340241.png)
+
+![image-20210121111448502](md-images/image-20210121111448502.png)
+
+3. 돌아온 응답(HTTPResponse)을 객체로 가져온 것!

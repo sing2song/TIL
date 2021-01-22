@@ -70,7 +70,7 @@ web server application : 서버에서 동작하는 응용프로그램.(Django-py
 
 `IP 주소` : Network에 연결되어있는 각종 기기에 부여되는 논리적인 주소. 4자리. (ex. 192.168.34.2)
 
-`MAC 주소` : Network에 연결되어있는 물리적인 주소. 변경불가능!! 6자리. (ex.34.37.128.34.2.76)
+`MAC 주소` : Network에 연결되어있는 물리적인 주소. 변경불가!! 6자리. (ex.34.37.128.34.2.76)
 
 프로그램할땐 IP 주소를 사용한다. 컴퓨터는 통신하기 위해선 물리적인 주소인 MAC주소를 쫓으므로 내부적으로 IP→MAC주소로 변경해주는 프로토콜도 존재한다.
 
@@ -148,7 +148,7 @@ why=> 서버는 한정 되어있기 때문에! 클라이언트 수를 조절 할
 
 
 
-### 잠깐 실습❗
+### 📢잠깐 실습
 
 1. jupyter notebook 파일을 보관하고 있는 python_ML에 다가 파일을 만들어봅시다~ webclient_test.py로 파이썬 파일 생성!
 2. 파일 내용을 채우고 Anaconda Prompt를 이용해서 실행시켜본다.
@@ -161,7 +161,6 @@ url_obj = urllib.request.urlopen('http://www.example.com:80')
 #http://192.168.0.33 이렇게 ip주소를 써야하지만 도메인 주소를 써도 urlopen()이 알아서 처리해줌
 
 print(url_obj)
-
 ```
 
 ![image-20210121111340241](md-images/image-20210121111340241.png)

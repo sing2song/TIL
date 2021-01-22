@@ -101,28 +101,46 @@ A. 과거에는 서버 쪽에서 한꺼번에 처리하면 되는데 굳이?<<�
 
 
 
-## 실습
+## 실습(case2 : front-end)
 
 > case2를 Web Storm으로 구현해보자!
 
-![image-20210122132617849](md-images/image-20210122132617849.png)
+![image-20210122133541842](md-images/image-20210122133541842.png)
 
 1. 프로젝트명 boxoffice_webclient 프로젝트 생성
 
 2. 파일명 boxoffice.html (html5)로 파일 생성
 3. web client program을 만들어보자!
 
+해당 프로젝트에서 3개의 html과 3개의 js를 생성했음!
+
+boxoffice_webclient.html / javascript_exec.html/ jQuery_exec.html
+
+my_scirpt.js /javascript_exec.js /jQuery_exec.js
 
 
-> jQuery 사용하기
+
+### jQuery
+
+jQuery : javascript 라이브러리.
+
+- 쉽다! 
+
+- 유지보수성이 떨어진다. 요즘은 디자인 패턴을 따르는 추세.
+
+  ex. Angular(google), React(facebook), Vue.js 와 같은 프론트엔드 프레임워크가 나오게 되었다.
+
+
+
+> jQuery 가져오기
 
 라이브러리를 받아서 jQuery를 이용하자!
 
-CDN방식으로 import 하면 jQuery를 가져올 수 있다!
+**CDN**방식으로 import 하면 jQuery를 가져올 수 있다!
 
-`CDN`(contents delivery network) : 네트워크가 가능하다는 가정 하에 사용가능! 지리,물리적으로 떨어져 있는 사용자에게 컨텐츠를 더 빠르게 제공할 수 있는 기술.
+`CDN` (contents delivery network) : 네트워크가 가능하다는 가정 하에 사용가능! 지리,물리적으로 떨어져 있는 사용자에게 컨텐츠를 더 빠르게 제공할 수 있는 기술.
 
-jQuery : javascript 라이브러리.
+
 
 https://code.jquery.com/
 
@@ -151,4 +169,159 @@ function hello(){
     //현재 위치하는 곳이 location. 해당 링크로 이동
 }
 ```
+
+
+
+id는 고유한 값(unique), class는 unique하지 않다. 
+
+사용방법
+
+id : $('#id이름') / class : $('.class이름') 
+
+
+
+> 사용법
+
+selector부터 알아보자!
+selector는 HTML엘리먼트를 지칭하는 특수한 표기법을 의미
+jQuery는 $로 시작한다.
+형식 : $(selector).method()
+모든 jQuery구문은 여기서 크게 벗어나지 않는다.
+
+
+```javascript
+1. 전체 선택자 : *
+$('*') => jQuery안에 있는 모든 요소 다 찾아라
+
+2.태그 선택자 : 태그명을 가지고 선택
+$('span').remove()
+
+3.아이디 선택자 : ID속성을 이용해ㅓㅅ 선택
+$('#inchon').text('소리없는 아우성!!)
+
+4.클래스 선택자 : class 속성을 이용해서 선택
+$('.region').css('color','blue')
+
+5.구조 선택자 : 부모, 자식,형제 관계를 이용해서 선택
+$('ol>li').css('color','cyan')
+```
+
+
+
+
+
+
+
+### JavaScript
+
+화면처리와 밀접한 연관을 갖고있음
+
+1. 변수선언
+
+```javascript
+//1. 변수선언(파이썬이랑 거의 비슷)
+//var, let 변수타입 사용가능
+my_variable=100;
+let tmp1='sample';   //string
+let tmp2=3.14;      //number
+let tmp3=true;      //boolean
+let tmp4=[1,2,3,4]  //array
+```
+
+
+
+2. 출력
+
+브라우저 상에서 실행되게 된다. 출력하기가 애매함.
+
+대체로 alert() 함수를 사용해서 값을 확인하긴한다.
+
+=>올바른사용법은 아님. blocking method : 코드의 수행이 멈추게 하기도 한다. 
+
+또는 console.log()를 사용한다.
+
+```javascript
+alert(tmp1) 
+//blocking method:여기에서 코드의 수행이 일시 중지
+console.log('변수의 값 : '+tmp1)
+//브라우저 내에서 F12를 누르고 console창을 확인한다.
+```
+
+
+
+3. javascript 객체
+
+python의 dict와 같은 구조=> 데이터 표현방식으로는 JSON
+
+```javascript
+let obj ={ name : '홍길동',
+            age : 25 }
+console.log(obj.name) //홍길동
+```
+
+
+
+4. 함수
+
+function키워드 사용.
+
+```javascript
+function add(x,y){
+    return x+y
+}
+alert(add(10,20))
+```
+
+
+
+
+
+### Ajax
+
+single server page
+
+비동기적인 웹 애플리케이션의 제작을 위해 아래와 같은 조합을 이용하는 웹 개발 기법
+
+
+
+
+
+### HTML
+
+몇가지 태그를 알아보자
+
+```html
+<h1></h1> : block level, 헤드라인
+<ul>
+    <li></li>
+</ul>
+:순서없는 리스트
+
+<ol>
+    <li></li>
+</ol>
+:순서있는 리스트
+
+<div>:block level
+    <span></span>:line level
+</div>
+
+<img src=""> : 이미지 태그, 끝나는 태그가 없다!
+
+<input type="button" value="클릭" onclick="함수명()">
+```
+
+element :  HTML 구성 요소
+
+tag : <>로 구성되는 HTML요소
+
+이러한 태그들을 사용하기 위해 jQuery를 써보자!
+
+
+
+
+
+
+
+
 

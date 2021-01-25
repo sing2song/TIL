@@ -180,7 +180,34 @@ id : $('#id이름') / class : $('.class이름')
 
 
 
+#### WEBStorm - jQuery 인식
+
+webstorm이 jQuery를 인식하지 못하고 있다.
+
+why=> jQuery가 인지되는 시점은 코드가 돌고있는, 웹에 올라간 시점이다.
+
+CDN방식으로 받아오기때문에 webStorm은 인식하지 못한다.
+
+
+
+웹스톱 file - setting - Language&framework 탭 Javascript - Libraries 클릭
+
+
+![image-20210125131544216](md-images/image-20210125131544216.png)
+
+
+
+다운로드를 눌러서 jqQuery를 추가해준다.
+
+![image-20210125131948360](md-images/image-20210125131948360.png)
+
+
+
+
+
 > 사용법
+
+#### selector
 
 selector부터 알아보자!
 selector는 HTML엘리먼트를 지칭하는 특수한 표기법을 의미
@@ -203,10 +230,111 @@ $('#inchon').text('소리없는 아우성!!)
 $('.region').css('color','blue')
 
 5.구조 선택자 : 부모, 자식,형제 관계를 이용해서 선택
+> : 자식
+(공백) : 후손 
++: 바로 다음에 나오는 형제
+~: 뒤에 나오는 모든 형제
+
 $('ol>li').css('color','cyan')
+
+6.속성 선택자 : 속성을 이용해서 선택
+$('input[type]') => input tag를 찾아서 type이라는 속성이 있는 element를 선책
+$('input[type=button]').disable()
 ```
 
 
+
+```javascript
+jQuery_sample01.js
+
+$('ol>li:first').text()//고양이 첫번째
+$('ol>li:last').text()//강아지 마지막
+$('ol>li:first + li').text()//호랑이 첫번째 다음 li형제
+    
+//순번선택자
+console.log($('ol>li:eq(1)').text())
+eq안에는 인덱스, 순서를 쓴다.
+```
+
+
+
+#### 함수
+
+- text('') : 해당 위치에 text형태로 글을 넣는다.
+
+- val(): 해당 값을 가져온다
+
+- attr('') : 특정 속성  값을 가져온다. 속성값을 바꾸기도한다.
+
+  ex) 
+
+```javascript
+$('input[type=text]').attr('size',10)
+```
+
+- each(function(idx,item){  }) : 반복함수
+
+  ex) 
+
+```javascript
+$('ol>li').each(function (idx,item){
+    //item을 제이쿼리 형태로 가져와야한다!! 함수사용가능 ex.text()
+    console.log(idx+'번째 : '+$(item).text()+'입니다.')
+})
+```
+
+
+
+- lambda 함수 : 이름이 없는 함수(묵시적 함수)
+
+결국 함수를 독립적으로 선언하지 못하고 변수같은 곳에 저장해서 사용. 
+
+함수를 하나의 값으로 인식하는 것과 같다. 
+
+함수가 하나의 값으로 사용되기 때문에 함수를 다른 함수의 인자로 활용이 가능하다.
+
+ex) 
+
+```javascript
+let kaka = function(){}
+```
+
+
+
+- css() : 특정 element에 css 추가
+- addClass() : 특정 element에 클래스를 추가
+- removeAttr() : 특정 element에 특정 속성을 제거한다.
+- remove() : 특정 element를 제거한다
+- empty() : 자신의 후손을 모두 삭제
+
+
+
+> 새롭게 요소를 만들 때
+
+```javascript
+$('<div></div>').text('소리없는 아우성')
+//<div>소리없는 아우성</div>
+
+let my_img=$('<img/>').attr('src','img/jjangu.png')
+```
+
+
+
+> element를 원하는 위치에 붙이는 4가지 함수
+
+1. append():자식으로 붙이고 맨 마지막 자식으로 붙인다.
+
+2. prepend(): 자식으로 붙이고 맨 처음 자식으로 붙인다.
+3. after():형제로 붙이고 바로 다음 형제로 붙인다.
+4. before():형제로 붙이고 이전 형제로 붙인다.
+
+```javascript
+let my_li=$('<li></li>').text('아이유')
+$('ul').append(my_li)//마지막 자식으로 붙게된다
+$('ul').prepend(my_li)
+$('ul>li:eq(1)').after(my_li)
+$('ul>li:last').before(my_li)
+```
 
 
 
@@ -276,11 +404,49 @@ alert(add(10,20))
 
 
 
-### Ajax
+
+
+
+
+### AJAX
 
 single server page
 
 비동기적인 웹 애플리케이션의 제작을 위해 아래와 같은 조합을 이용하는 웹 개발 기법
+
+
+
+location.href로 이동해서 결과를 출력했었다!
+
+하지만 우리에게 필요한 것은 작업 결과를 해당 페이지에 뿌려주는 것. location.href를 사용하면 refresh가 일어나서 원하는 작업이 불가능하다.
+
+이 문제를 해결하기 위해서 JavaScript가 가지고있는 특별한 통신을 이용.
+
+AJAX 통신방식을 이용해서 이 문제를 해결한다.
+
+순수 JavaScript의 AJAX코드가 구현하기 너무 어려워서 jQuery를 이용해서 AJAX를 구현한다.
+
+> dailBoxOfficeSearch.js
+
+```javascript
+$.ajax({
+        url : open_api,       //호출할 서버쪽 프로그램의 url
+        type : 'GET',         //서버쪽 프로그램에 대한 request방식
+        dataType : 'json',    //서버프로그램이 결과로 보내주는 데이터의 형식(json)
+        data : {
+            key:user_key,
+            targetDt:user_date
+        },
+        success : function (){
+            alert("서버호출성공!!")
+
+        },
+        error:function (){
+            alert("에러!!")
+        }
+    })
+
+```
 
 
 
@@ -322,6 +488,39 @@ tag : <>로 구성되는 HTML요소
 
 
 
+
+
+
+## BootStap(BoxOfficeSearch.html)
+
+> 일일박스오피스 OPEN API를 이용하여 웹을 만들어보자!!!
+
+- Example에서 해당 예시로 만들것!
+
+  https://getbootstrap.com/docs/5.0/examples/dashboard/	
+
+  모든 html과 css를 가져오기 위해 해당 예시의 소스를 긁어온다!
+
+  또는 우클릭해서 검사 탭, Sources에서 가져올 수도 있다!
+
+  ![image-20210125151608791](md-images/image-20210125151608791.png)
+
+  해당 소스를 누르고 코드에서 우클릭 - save as하면 해당 소스를 저장할수 있다!!
+
+
+
+- Download탭누르고 CDN 긁어서 사용하기
+
+  https://getbootstrap.com/docs/5.0/getting-started/download/
+
+  ![image-20210125150947505](md-images/image-20210125150947505.png)
+
+
+
+```javascript
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+```
 
 
 

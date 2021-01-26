@@ -437,7 +437,7 @@ $.ajax({
             key:user_key,
             targetDt:user_date
         },
-        success : function (){
+        success : function (result){
             alert("서버호출성공!!")
 
         },
@@ -446,6 +446,48 @@ $.ajax({
         }
     })
 
+```
+
+
+
+success 시에 결과로 json 객체를 받아오게된다!
+
+success코드
+
+```javascript
+success : function (result){
+            $('#my_tbody').empty()
+            //alert("서버호출성공!!")
+            //서버로부터 결과 json을 받아왔다!!
+            //json은 단순 문자열 => 사용하기 쉽지않다
+            //json => javascript 객체로 변환시킨다
+            let movie_list=result['boxOfficeResult']['dailyBoxOfficeList']
+
+            for(let i=0; i<movie_list.length ;i++){
+                let m_rank=movie_list[i].rank//순위
+                let m_name=movie_list[i].movieNm//영화이름
+                let m_audi=movie_list[i].audiAcc//관람객수
+                let m_open=movie_list[i].openDt//개봉일
+                let m_sales=movie_list[i].salesAcc//누적매출액
+                //데이터를 가져왔으니 이제 HTML element를 생성
+
+                let tr = $('<tr></tr>')
+                let rank_td=$('<td></td>').text(m_rank)
+                let title_td=$('<td></td>').text(m_name)
+                let audi_td=$('<td></td>').text(m_audi)
+                let open_td=$('<td></td>').text(m_open)
+                let sales_td=$('<td></td>').text(m_sales)
+
+                tr.append(rank_td)
+                tr.append(title_td)
+                tr.append(audi_td)
+                tr.append(open_td)
+                tr.append(sales_td)
+
+                $('#my_tbody').append(tr)
+            }
+
+        },
 ```
 
 

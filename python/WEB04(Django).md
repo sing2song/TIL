@@ -54,18 +54,6 @@ python의 python script가 web server와 통신하기 위한 규약.
 
 
 
-# MVT pattern(Model기능 View함수 Template )
-
-![image-20210127131331329](md-images/image-20210127131331329.png)
-
-웹 클라이언트에서 request를 보내면 제일 먼저 서버에서 URLConf를 거쳐서 View로 들어간다. View는 함수의 집합으로 볼 수 도 있고 class의 메소드이다.
-
-View에서는 기능을 수행하는 로직을 갖고 있고, Model한테 CRUD를 시킬 수 있다. ORM을 통해서 Database와 연결.
-
-​	`ORM `: python class를 이용해서 Database를 사용하는 것
-
-나온 결과로 Template을 통해 View를 거쳐 response를 클라이언트에게 전달해준다.
-
 
 
 
@@ -85,6 +73,22 @@ View에서는 기능을 수행하는 로직을 갖고 있고, Model한테 CRUD�
 - 개개인의 어플리케이션들이 프로젝트를 만드는 것. (다른 곳에서는 어플리케이션을 하나의 모듈로 보기도하기 때문에 용어 혼동조심!!)
 
 - 프로젝트는 어플리케이션들의 모음
+
+
+
+### MVT pattern(Model기능 View함수 Template )
+
+![image-20210127131331329](md-images/image-20210127131331329.png)
+
+웹 클라이언트에서 request를 보내면 제일 먼저 서버에서 URLConf를 거쳐서 View로 들어간다. View는 함수의 집합으로 볼 수 도 있고 class의 메소드이다.
+
+View에서는 기능을 수행하는 로직을 갖고 있고, Model한테 CRUD를 시킬 수 있다. ORM을 통해서 Database와 연결.
+
+​	`ORM `: python class를 이용해서 Database를 사용하는 것
+
+나온 결과로 Template을 통해 View를 거쳐 response를 클라이언트에게 전달해준다.
+
+
 
 
 
@@ -337,6 +341,14 @@ MIDDLEWARE = [
 ```python
 ROOT_URLCONF = 'mysite.urls'
 ```
+
+> urls.py를 살펴보면
+
+![image-20210128131839570](md-images/image-20210128131839570.png)
+
+위와 같이 설정되어있다! 그래서 admin경로로 들어갈 때 가능한 것.
+
+뒤에는 내가 호출할 view함수를 적어주는 것. 
 
 
 

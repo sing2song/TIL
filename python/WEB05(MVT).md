@@ -16,7 +16,7 @@ ex)![image-20210127132447411](md-images/image-20210127132447411.png)
 
 > Database Table 설계
 
-
+![image-20210128143728275](md-images/image-20210128143728275.png)
 
 테이블은 몇개 필요할까? 
 
@@ -300,3 +300,159 @@ polls클래스로부터 만든 question, choice라는 테이블이라는 뜻.
 id와 question_id<<붙어서나오는 것을 확인할 수 있음!!!
 
 ![image-20210128130730194](md-images/image-20210128130730194.png)
+
+
+
+## 뷰
+
+클라이언트의 request = URL
+
+조직 = View
+
+화면 = Template
+
+![image-20210128134005010](md-images/image-20210128134005010.png)
+
+1. http://localhost:8000/polls/ 라는 url(request)을 view에 줄것. request 정보를 한꺼번에 모아서 객체로 보내는거다! view함수의 인자를 자동으로 모아서 보낼려면??
+
+   1-1. views.py 안에 만들어둘 index()함수에는 request가 전달되므로 사용될 모든 정보를 인자로 받아야한다!
+
+2. view 안에 index() < (우리가 만들어야할 함수) : model을 이용해서 질문내용을 가져온다.
+3. template에 기본적구성만 갖고있던 index.html에 View에서 모델을 얹어 데이터를 건네준다. 즉, 클라이언트에게 보여줄 완성된 형태를 보여주게 된다. request, Model data, index.html을 보내주는 것! rend함수로 이 3개를 합쳐서 보내주게 된다. => HttpResponse가 만들어짐
+4. index.html에서 투표를하면 다시 View를 거쳐 URL에게 response를 건네준다.
+
+위 내용을 코드로 표현한 것이 아래 코드
+
+```python
+#views.py
+from polls.models import Question
+
+# Create your views here.
+def index(request):
+    # 데이터베이스를 뒤져서 설문목록을 가져온다.
+    # 테이블명 : polls_Question, 클래스명 : Question
+    question_list = Question.objects.all().order_by('pub_date')
+    # 객체를 모두 들고와라! => 테이블 안에 있는 모든 record를 들고오게 된다.
+    # order_by('컬럼명') : 어떤 컬럼으로 정렬해서 가져와라. 기본이 오름차순. '-컬럼명' : 내림차순
+    # 슬라이싱도 가능 ex) order_by('pub_date')[:5]
+
+    #데이터 전달용 dictionary를 만든다.
+    context={ 'q_list' : question_list}
+    return render(request, 'index.html', context)
+```
+
+
+
+
+
+**!!! URL에서 VIEW로 넘겨줄때 URLConf를 거쳐야한다!**
+
+```python
+#settings.py
+ROOT_URLCONF = 'mysite.urls'
+```
+
+> URLCONF 는 urls.py를 확인해라!라는 뜻
+
+
+
+```python
+#urls.py
+from django.contrib import admin
+from django.urls import path
+from polls import views
+
+#http://localhost:8080/admin/
+#http://localhost:8080/polls/
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('polls/', views.index, name='index')
+]
+```
+
+polls/ 로 들어오는 url은 컴마 뒤의 함수를 호출해주라는 뜻.
+
+index는 현재 우리가 만들어야하는 함수다!!
+
+`name `: 링크 연결에 대한 논리적인 이름을 부여하는것. 일반적으론 함수이름을 따른다.
+
+
+
+## 템플릿
+
+> index.html을 만들어보자
+
+![image-20210128140502852](md-images/image-20210128140502852.png)
+
+templates 폴더를 new directory로 생성한 뒤 index.html을 만들어준다.
+
+클라이언트한테 보여주는 화면이 index.html이 된다.
+
+index.html안에 아무글이나 일단 적어보자!!
+
+
+
+현재 로컬서버도 돌아가고 있는 중이므로(django가 켜져있음)
+
+urls.py에다가 polls/로 들어오면 함수가 출력되도록 위과정을 모두 걸쳐 수행을 해놨으므로 http://localhost:8000/polls로 들어가본다
+
+![image-20210128140848597](md-images/image-20210128140848597.png)
+
+성공>.<)99
+
+
+
+### admin
+
+> admin 사이트로 들어가서 질문을 등록하자
+
+![image-20210128141903347](md-images/image-20210128141903347.png)
+
+> Question테이블에서 질문만들기
+
+![image-20210128141541307](md-images/image-20210128141541307.png)
+
+![image-20210128141621340](md-images/image-20210128141621340.png)
+
+![image-20210128141650369](md-images/image-20210128141650369.png)
+
+이와 같이 우리가 만들기로한 질문들을 만들어 넣는다!
+
+
+
+데이터베이스 확인하기 위해서 SQLite에서 해당 테이블 우클릭 테이블 보기 클릭! 또는 데이터보기 탭에서 해당 테이블 누르면 확인가능하다!
+
+![image-20210128141826872](md-images/image-20210128141826872.png)
+
+
+
+> Choice 테이블에서 질문만들기
+
+외래키를 갖고있으므로 아래처럼 질문이 같이 온다.
+
+![image-20210128141953130](md-images/image-20210128141953130.png)
+
+![image-20210128142113940](md-images/image-20210128142113940.png)
+
+Question테이블에 값을 넣었던것처럼 값을 넣어준다.
+
+
+
+### index.html
+
+index.html에 context가 전달된것. 현재 context={'q_list' : question_list}로 views.py 에 들어가있다. 즉 index.html안에서 q_list로 사용이 가능하다.
+
+JSP에서 데이터 로직을 표현하는 방식과 같다!
+
+for문 if문 등을 사용할 수 있게 됨!! 대신 python로직으로 넣을 수 있다!
+
+{% %} : python 로직을 넣는다.
+
+{{문자열로 표현되는 값}} : 문자열 값.
+
+빈 리스트는 False로 간주. 요소가 있으면 True.
+
+```html
+
+```
+

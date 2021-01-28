@@ -450,9 +450,26 @@ for문 if문 등을 사용할 수 있게 됨!! 대신 python로직으로 넣을 
 
 {{문자열로 표현되는 값}} : 문자열 값.
 
-빈 리스트는 False로 간주. 요소가 있으면 True.
+python에서 빈 리스트는 False로 간주. 요소가 있으면 True.
 
 ```html
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% if q_list %}
+        <ul>
+            {% for question in q_list%}
+                <li><a href="/polls/{{ question.id }}">{{ question.question_text }}</a></li>
+            {% endfor %} <!--jango에서 쓰이는 template언어는 이렇게 표현-->
+        </ul>
+    {% else %}
+        <h1>데이터가 없어요!!</h1>
+    {% endif %}
+</body>
+</html>
 ```
 

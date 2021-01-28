@@ -512,8 +512,38 @@ C:\python-Django\MyFirstWeb>python manage.py startapp polls
 
 ![image-20210128102626268](md-images/image-20210128102626268.png)
 
-계정은 anaconda prompt에서 만든다.
+계정은 **anaconda prompt**에서 만든다.
 
 
 
-9.
+9. 관리자계정만들기
+
+![image-20210128103112900](md-images/image-20210128103112900.png)
+
+```bash
+(base) C:\python-Django\MyFirstWeb>python manage.py createsuperuser
+Username (leave blank to use '32153256'): ssong #계정명 지정
+Email address: sing2song@naver.com #이메일넣기
+Password:#ssong
+Password (again):#ssong
+The password is too similar to the username.
+This password is too short. It must contain at least 8 characters.
+Bypass password validation and create user anyway? [y/N]: y
+Superuser created successfully.
+#너무 짧다고 안내함ㅋㅋㅋㅋ
+```
+
+
+
+10. 어드민 페이지에서 방금 만든 아이디오 비밀번호로 들어간다! 비밀번호 까먹으면 알아낼 방법이 없으니 주의!!
+
+![image-20210128103401652](md-images/image-20210128103401652.png)
+
+
+
+11. 우리는 두 개의 database table이 더 필요하다. => 모델을 만들자! WEB05에 작성
+
+
+
+
+

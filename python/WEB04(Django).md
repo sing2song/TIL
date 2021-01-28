@@ -530,7 +530,7 @@ The password is too similar to the username.
 This password is too short. It must contain at least 8 characters.
 Bypass password validation and create user anyway? [y/N]: y
 Superuser created successfully.
-#너무 짧다고 안내함ㅋㅋㅋㅋ
+#너무 짧다고 안내한것ㅋㅋㅋㅋ걍 y하고 생성했다.
 ```
 
 

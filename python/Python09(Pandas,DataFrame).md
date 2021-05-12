@@ -10,7 +10,7 @@
 
 
 1. Series : 동일한 데이터 타입의 복수개의 성분으로 구성 ex numpy.array
-2. DataFrame ; Table형식으로 데이터 저장하는 자료구조
+2. DataFrame : Table형식으로 데이터 저장하는 자료구조
 
 
 
@@ -617,7 +617,7 @@ exit;
     C:\Users\32153256\Desktop\mysql-5.6.50-winx64\mysql-5.6.50-winx64\bin에 저장했음. (_BookTableDump.sql)
 
     ```bash
-mysql -u data -p library < _BookTableDump.sql
+    mysql -u data -p library < _BookTableDump.sql
     ```
 
     

@@ -140,8 +140,8 @@ print(a[1:4])
 print(a[0:1]) #[1] 원본과 결과본이 같아야한다!!! list형태로 나오게 된다!
 print(a[3:])  #[3.14,True]
 print(a[:2])  #[1,2]
-print(a[:])
-print(a[:-1])
+print(a[:])	  #[1, 2, ['show', 'me', 'the', 'money'], 3.14]
+print(a[:-1]) #[1, 2, ['show', 'me', 'the', 'money'], 3.14]
 ```
 
 > **연결(concatenation)**

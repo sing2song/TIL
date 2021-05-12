@@ -6,6 +6,8 @@
 
 vector, matrix연산에 있어서 상당한 편리성을 제공.
 
+내부적으로는 C로 구현되어 있어 연산이 빠른 속도로 수행됩니다.
+
 
 
 numpy module은 우리에게 기본적인 자료구조를 하나 제공한다.
@@ -282,6 +284,9 @@ print(arr.reshape(2,5))
 1. np.random.nomal() : 정규분포에서 실수형태의 난수 추출. 평균과 표준편차를 필요로한다.
 
 ```python
+import numpy as np
+import matplotlib.pyplot as plt
+
 my_mean=50 #평균값 통상적으론 avg를 쓰나 수학적으로는 mean을 사용
 my_std=2 #표준편차
 arr = np.random.normal(my_mean,my_std,(10000,)) #평균,표준편차,shape
